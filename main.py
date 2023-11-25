@@ -15,7 +15,7 @@ def get_functions(bin_path: str) -> List[str]:
 
 def parse_file(file_path: str) -> List[str]:
     with open(file_path, 'r') as file:
-        lines = file.readlines()
+        lines = [line.strip() for line in file.readlines()]
     return lines
 
 

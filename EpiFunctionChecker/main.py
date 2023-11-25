@@ -53,7 +53,7 @@ def run_analysis(bin_path: str, bf_path: str) -> None:
         exit(1)
 
 
-if __name__ == '__main__':
+def main():
     if len(sys.argv) >= 2 and (sys.argv[1] == '-h' or sys.argv[1] == '--help'):
         print_usage()
         exit(0)
@@ -70,3 +70,7 @@ if __name__ == '__main__':
         run_analysis(binary_path, a_path)
     print_usage()
     exit(1)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,4 +1,6 @@
-import subprocess, shutil, sys
+import shutil
+import subprocess
+import sys
 from typing import List
 
 
@@ -7,7 +9,20 @@ def get_functions(bin_path: str) -> List[str]:
     lines = nm_process.stdout.decode().split('\n')
     f_list = [line.split(' ')[-1] for line in lines if ' U ' in line]
     f_list = [fx.split(' ')[-1] for fx in f_list if not fx.startswith('__')]
+    f_list = [fx.split('@')[0] for fx in f_list]
     return f_list
+
+
+def parse_file(file_path: str) -> List[str]:
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    return lines
+
+
+def find_authorized_functions(functions_list: List[str], a_filepath: str) -> List[str]:
+    af = parse_file(a_filepath)
+    bf_found = [func for func in functions_list if func not in af]
+    return bf_found
 
 
 def is_tool_present(tool_name: str) -> bool:
@@ -15,17 +30,40 @@ def is_tool_present(tool_name: str) -> bool:
 
 
 def print_usage() -> None:
-    print('Usage: python3 main.py /path/to/your/binary')
+    print('Usage: python3 main.py /path/to/your/binary [/path/to/banned_functions.txt]')
+
+
+def run_analysis(bin_path: str, bf_path: str) -> None:
+    print(f'Analyzing {bin_path}...')
+    f_list = get_functions(bin_path)
+    print(f'Found {len(f_list)} functions')
+    print('Checking for banned functions...')
+    a_list = find_authorized_functions(f_list, bf_path)
+    if len(a_list) == 0:
+        print('No banned functions found')
+        exit(0)
+    else:
+        print(f'\033[31mFound {len(a_list)} banned functions !\033[0m')
+        print('Banned functions:')
+        for bf_found in a_list:
+            print("  \033[31m" + bf_found + "\033[0m")
+        exit(1)
 
 
 if __name__ == '__main__':
-    if (len(sys.argv) != 2) or (sys.argv[1] == '-h') or (sys.argv[1] == '--help'):
+    if len(sys.argv) >= 2 and (sys.argv[1] == '-h' or sys.argv[1] == '--help'):
         print_usage()
         exit(0)
-    binary_path = sys.argv[1]
     if not is_tool_present('nm'):
         print('Cannot find nm executable, please install nm')
         exit(1)
-    functions = get_functions(binary_path)
-    for function in functions:
-        print(function)
+    if len(sys.argv) == 3:
+        binary_path = sys.argv[1]
+        a_path = sys.argv[2]
+        run_analysis(binary_path, a_path)
+    if len(sys.argv) == 2:
+        binary_path = sys.argv[1]
+        a_path = './bonus/authorized_functions.txt'
+        run_analysis(binary_path, a_path)
+    print_usage()
+    exit(1)

@@ -4,6 +4,7 @@ import sys
 from typing import List
 
 TEXT_RED = '\033[31m'
+TEXT_GREEN = '\033[32m'
 TEXT_CLEAR = '\033[0m'
 
 
@@ -43,7 +44,7 @@ def run_analysis(bin_path: str, bf_path: str) -> None:
     print('Checking for banned functions...')
     a_list = find_authorized_functions(f_list, bf_path)
     if len(a_list) == 0:
-        print('No banned functions found')
+        print(f'{TEXT_GREEN}No banned functions found{TEXT_CLEAR}')
         exit(0)
     else:
         print(f'{TEXT_RED}Found {len(a_list)} banned functions !{TEXT_CLEAR}')

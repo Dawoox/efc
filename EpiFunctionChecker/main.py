@@ -10,6 +10,9 @@ TEXT_CLEAR = '\033[0m'
 
 def get_functions(bin_path: str) -> List[str]:
     nm_process = subprocess.run(['nm', '-C', bin_path], stdout=subprocess.PIPE)
+    if nm_process.returncode != 0:
+        print('ERROR: nm failed')
+        exit(1)
     lines = nm_process.stdout.decode().split('\n')
     f_list = [line.split(' ')[-1] for line in lines if ' U ' in line]
     f_list = [fx.split(' ')[-1] for fx in f_list if not fx.startswith('__')]
@@ -34,7 +37,11 @@ def is_tool_present(tool_name: str) -> bool:
 
 
 def print_usage() -> None:
-    print('Usage: python3 main.py /path/to/your/binary [/path/to/banned_functions.txt]')
+    print("""
+    Usage: python3 main.py /path/to/your/binary [/path/to/banned_functions.txt]
+    If you don't specify a path to banned_functions.txt, the program will 
+    use the default one (./bonus/authorized_functions.txt)
+    """)
 
 
 def run_analysis(bin_path: str, bf_path: str) -> None:
@@ -59,7 +66,7 @@ def main():
         print_usage()
         exit(0)
     if not is_tool_present('nm'):
-        print('Cannot find nm executable, please install nm')
+        print('ERROR: Cannot find nm executable, please install nm')
         exit(1)
     if len(sys.argv) == 3:
         binary_path = sys.argv[1]

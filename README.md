@@ -33,3 +33,23 @@ nix run github:Dawoox/efc </path/to/your/binary> [/path/to/authorized_functions.
 ```bash
 python3 ./EpiFunctionChecker/main.py </path/to/your/binary> [/path/to/authorized_functions.txt]
 ```
+
+## authorized_functions.txt
+
+The file must contain the list of authorized functions, one per line. <br>
+For example (from the setting_up project):
+
+```txt
+open
+read
+write
+close
+malloc
+free
+stat
+```
+
+## Limitations
+
+- On some projects, the TA authorizes some functions without it being writing on the subject. On the setting_up project for example, the TA authorizes the use of `memset` without it being written on the subject.
+- We can't provide a trace back to the line where the banned function is used. We can only provide the name of the function (and the address where it is used, but it won't show up in the output).

@@ -3,6 +3,9 @@ import subprocess
 import sys
 from typing import List
 
+TEXT_RED = '\033[31m'
+TEXT_CLEAR = '\033[0m'
+
 
 def get_functions(bin_path: str) -> List[str]:
     nm_process = subprocess.run(['nm', '-C', bin_path], stdout=subprocess.PIPE)
@@ -43,10 +46,10 @@ def run_analysis(bin_path: str, bf_path: str) -> None:
         print('No banned functions found')
         exit(0)
     else:
-        print(f'\033[31mFound {len(a_list)} banned functions !\033[0m')
-        print('Banned functions:')
+        print(f'{TEXT_RED}Found {len(a_list)} banned functions !{TEXT_CLEAR}')
+        print(f'{TEXT_RED}Banned functions:{TEXT_CLEAR}')
         for bf_found in a_list:
-            print("  \033[31m" + bf_found + "\033[0m")
+            print(TEXT_RED + bf_found + TEXT_CLEAR)
         exit(1)
 
 

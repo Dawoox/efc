@@ -1,4 +1,4 @@
-# Epitech Banned Function Checker
+# [EFC] Epitech Banned Function Checker
 
 ![Screenshot of the program running and detecting a banned function inside a binary.](./docs/preview.png "Sreenshot of the program running")
 
@@ -25,7 +25,7 @@ the program will use the default one: `./bonus/authorized_functions.txt`
 ### On Nix systems
 
 ```bash
-nix run github:Dawoox/EpiFunctionChecker </path/to/your/binary> [/path/to/authorized_functions.txt]
+nix run github:Dawoox/efc </path/to/your/binary> [/path/to/authorized_functions.txt]
 ```
 
 ### On other systems

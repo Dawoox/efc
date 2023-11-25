@@ -2,12 +2,12 @@ import subprocess, shutil, sys
 from typing import List
 
 
-def get_functions(binary_path: str) -> List[str]:
-    nm_process = subprocess.run(['nm', '-C', binary_path], stdout=nm_process.PIPE)
+def get_functions(bin_path: str) -> List[str]:
+    nm_process = subprocess.run(['nm', '-C', bin_path], stdout=subprocess.PIPE)
     lines = nm_process.stdout.decode().split('\n')
-    functions = [line.split(' ')[-1] for line in lines if ' U ' in line]
-    functions = [not fx.split(' ')[-1].startswith('_') for fx in functions]
-    return functions
+    f_list = [line.split(' ')[-1] for line in lines if ' U ' in line]
+    f_list = [fx.split(' ')[-1] for fx in f_list if not fx.startswith('__')]
+    return f_list
 
 
 def is_tool_present(tool_name: str) -> bool:

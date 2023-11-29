@@ -1,6 +1,7 @@
 import shutil
 import subprocess
 import sys
+import re
 from typing import List
 
 TEXT_RED = '\033[31m'
@@ -27,9 +28,8 @@ def parse_file(file_path: str) -> List[str]:
 
 
 def find_authorized_functions(functions_list: List[str], a_filepath: str) -> List[str]:
-    af = parse_file(a_filepath)
-    bf_found = [func for func in functions_list if func not in af]
-    return bf_found
+    af_list = parse_file(a_filepath)
+    return [func for func in functions_list if not any(re.search(af, func) for af in af_list)]
 
 
 def is_tool_present(tool_name: str) -> bool:

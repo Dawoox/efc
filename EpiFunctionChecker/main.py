@@ -42,8 +42,8 @@ def is_tool_present(tool_name: str) -> bool:
 
 def print_usage() -> None:
     print("""
-    Usage: python3 main.py /path/to/your/binary [/path/to/banned_functions.txt]
-    If you don't specify a path to banned_functions.txt, the program will 
+    Usage: python3 main.py /path/to/your/binary [/path/to/authorized_functions.txt]
+    If you don't specify a path to authorized_functions.txt, the program will 
     use the default one (./bonus/authorized_functions.txt)
     """)
 

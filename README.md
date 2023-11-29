@@ -1,6 +1,9 @@
 # [EFC] Epitech Banned Function Checker
 
-![Screenshot of the program running and detecting a banned function inside a binary.](./docs/preview.png "Sreenshot of the program running")
+![Screenshot of the program running and detecting a banned function inside a binary.](./docs/preview.png "Screenshot of the program running")
+
+This tool allow you to check if your binary contains any function banned in your current subject.
+It was made to be used in an automated CI.
 
 > **Warning**: The program will only run on UNIX systems.
 

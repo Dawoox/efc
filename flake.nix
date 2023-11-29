@@ -12,30 +12,33 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-       devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          python311
-        ];
-       };
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            binutilsNoLibc
+            python311
+          ];
+        };
 
-       formatter = pkgs.nixpkgs-fmt;
+        formatter = pkgs.nixpkgs-fmt;
 
-       packages = {
-        EpiFunctionChecker =
-          let
-            pypkgs = pkgs.python311Packages;
-          in
-          pypkgs.buildPythonPackage {
-            pname = "EpiFunctionChecker";
-            version = "0.1.0";
-            src = ./.;
+        packages = rec {
+          defulat = EpiFunctionChecker;
+          EpiFunctionChecker =
+            let
+              pypkgs = pkgs.python311Packages;
+            in
+            pypkgs.buildPythonPackage {
+              pname = "EpiFunctionChecker";
+              version = "0.1.0";
+              src = ./.;
 
-            nativeBuildInputs = with pkgs; [
-              makeWrapper
-            ];
-          };
-        
-        default = self.packages.${system}.EpiFunctionChecker;
-      };
-    });
+              nativeBuildInputs = [ pkgs.makeWrapper ];
+
+              postFixup = ''
+                wrapProgram $out/bin/EpiFunctionChecker \
+                  --set PATH "${pkgs.binutilsNoLibc}/bin"
+              '';
+            };
+        };
+      });
 }

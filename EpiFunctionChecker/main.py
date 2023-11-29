@@ -22,9 +22,13 @@ def get_functions(bin_path: str) -> List[str]:
 
 
 def parse_file(file_path: str) -> List[str]:
-    with open(file_path, 'r') as file:
-        lines = [line.strip() for line in file.readlines()]
-    return lines
+    try:
+        with open(file_path, 'r') as file:
+            lines = [line.strip() for line in file.readlines()]
+        return lines
+    except FileNotFoundError as e:
+        print(f"ERROR: Did not found {file_path}")
+        sys.exit(1)
 
 
 def find_authorized_functions(functions_list: List[str], a_filepath: str) -> List[str]:

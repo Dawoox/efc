@@ -6,6 +6,8 @@
 
 > ***Note**: The program is only tested on NixOS.*
 
+---
+
 ## Dependencies
 
 ### On Nix systems
@@ -37,7 +39,7 @@ python3 ./EpiFunctionChecker/main.py </path/to/your/binary> [/path/to/authorized
 ## authorized_functions.txt
 
 The file must contain the list of authorized functions, one per line. <br>
-For example (from the setting_up project):
+*For example (from the setting_up project):*
 
 ```txt
 open
@@ -47,6 +49,14 @@ close
 malloc
 free
 stat
+```
+
+Each line is treated as **a regex expression**, so you can ues wildcard to allow
+a full library. <br>
+*For example (in the my_hunter project) to include all the CSFML functions:*
+
+```txt
+sf*
 ```
 
 ## Limitations

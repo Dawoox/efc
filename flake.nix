@@ -22,7 +22,7 @@
         formatter = pkgs.nixpkgs-fmt;
 
         packages = rec {
-          defulat = EpiFunctionChecker;
+          default = EpiFunctionChecker;
           EpiFunctionChecker =
             let
               pypkgs = pkgs.python311Packages;

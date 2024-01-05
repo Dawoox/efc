@@ -67,3 +67,4 @@ sf*
 - On some projects, the TA authorizes some functions without it being writing on the subject. On the setting_up project for example, the TA authorizes the use of `memset` without it being written on the subject.
 - We can't provide a trace back to the line where the banned function is used. We can only provide the name of the function (and the address where it is used, but it won't show up in the output).
 - Doesn't work on library file (.a), see [this issue](https://github.com/Dawoox/efc/issues/1)
+- CSFML colors need to be added to the `authorized_functions.txt` file, see [this issue](https://github.com/Dawoox/efc/issues/5)
